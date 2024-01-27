@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    width: 80%;
+    background-color: #263e6c;
+    margin: auto;
+    border-radius: 10px;
+    padding-top: 20px;
+}
+
+.cal {
+    height: 800px;
+    width: 60%;
+    margin: auto;
+    border: 1px solid white;
+    border-top: 0.5px solid white;
+    border-radius: 10px;
+}
+
+.cal__header {
+    margin-top: 0px;
+    width: 100%;
+    color: white;
+    text-align: center;
+    background-color: #2596be;
+    height: 80px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top: 0.5px solid white;
+}
+
+.cal__header h1 {
+    display: inline-block;
+}
+
+.cal__header_dash {
+    display: inline-block;
+    font-size: 20px;
+    border-top: 2px solid white;
+    width: 15%;
+    margin: 5px;
+    height: 5px;
+}
