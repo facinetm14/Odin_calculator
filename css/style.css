@@ -3,6 +3,7 @@ body {
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 .container {
     width: 80%;
     background-color: #263e6c;
@@ -11,6 +12,7 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
 .cal {
     height: 700px;
     width: 40%;
@@ -20,6 +22,7 @@ body {
     border-bottom: 0.5px solid #263e6c;
     border-radius: 10px;
 }
+
 .cal__header {
     margin-top: 0px;
     width: 100%;
@@ -31,9 +34,11 @@ body {
     border-top-left-radius: 10px;
     border-top: 0.5px solid #263e6c;
 }
+
 .cal__header h1 {
     display: inline-block;
 }
+
 .cal__header_dash {
     display: inline-block;
     font-size: 20px;
@@ -42,24 +47,27 @@ body {
     margin: 5px;
     height: 5px;
 }
+
 .cal__screen {
     height: 220px;
     background-color: white;
     margin-top: -20px;
     display: flex;
     justify-content: center;
-    flex-direction:column;
+    flex-direction: column;
     text-align: right;
 }
+
 .cal__touches {
     background-color: #b8c6cd;
     height: 400px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
 .footer {
     text-align: center;
-    margin-top:10px;
+    margin-top: 10px;
     color: white;
 }
 
@@ -69,6 +77,7 @@ body {
     width: 90%;
     margin-bottom: 0px;
 }
+
 .cal__screen_result {
     color: #5a5a5a;
     font-size: 50px;
@@ -76,6 +85,7 @@ body {
     width: 90%;
     margin-top: 5px
 }
+
 .cal__touches_row {
     width: 100%;
     display: flex;
@@ -84,22 +94,34 @@ body {
     border-bottom: 0.1px solid whitesmoke;
     height: 80px;
 }
+
 .row_touch {
     width: 25%;
     text-align: center;
     border-right: 0.1px solid whitesmoke;
     padding-top: 25px;
+    transition: backgroundColor 0.5s ease;
 }
+
 .last-col-touch {
     border-right: none;
 }
+
 .last-row {
     border-bottom: 0.5px solid #263e6c;
 }
+
 .last-row .row_touch {
     margin-bottom: 2px;
 }
-.first-row, .last-col-touch{
+
+.first-row,
+.last-col-touch {
     color: #395482;
     font-weight: bold;
+}
+
+.selected {
+    background-color: #2596be;
+    color: whitesmoke;
 }

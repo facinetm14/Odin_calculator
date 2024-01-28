@@ -13,39 +13,39 @@
                 <span class="cal__header_dash"></span><h1>CALCULATOR</h1><span class="cal__header_dash"></span>
             </div>
             <div class="cal__screen">
-                <p class="cal__screen_operation">17 + 20 </p>
-                <p class="cal__screen_result">37</p>
+                <p class="cal__screen_operation" id="screen_operation">0</p>
+                <p class="cal__screen_result" id="screen_result"></p>
             </div>
             <div class="cal__touches">
                 <div class="cal__touches_row first-row">
-                    <div class="row_touch">C</div>
-                    <div class="row_touch">%</div>
-                    <div class="row_touch" >÷</div>
-                    <div class="row_touch last-col-touch" >√</div>
+                    <div class="row_touch" data-key="C">C</div>
+                    <div class="row_touch" data-key="modulo">%</div>
+                    <div class="row_touch" data-key="divide">÷</div>
+                    <div class="row_touch last-col-touch" data-key="sqrt">√</div>
                 </div>
                 <div class="cal__touches_row">
-                    <div class="row_touch">7</div>
-                    <div class="row_touch">8</div>
-                    <div class="row_touch">9</div>
-                    <div class="row_touch last-col-touch">X</div>
+                    <div class="row_touch" data-key="7">7</div>
+                    <div class="row_touch" data-key="8">8</div>
+                    <div class="row_touch" data-key="9">9</div>
+                    <div class="row_touch last-col-touch" data-key="multiply">X</div>
                 </div>
                 <div class="cal__touches_row">
-                    <div class="row_touch">4</div>
-                    <div class="row_touch">5</div>
-                    <div class="row_touch">6</div>
-                    <div class="row_touch last-col-touch">+</div>
+                    <div class="row_touch" data-key="4">4</div>
+                    <div class="row_touch" data-key="5">5</div>
+                    <div class="row_touch" data-key="6">6</div>
+                    <div class="row_touch last-col-touch" data-key="add">+</div>
                 </div>
                 <div class="cal__touches_row">
-                    <div class="row_touch">1</div>
-                    <div class="row_touch">2</div>
-                    <div class="row_touch">3</div>
-                    <div class="row_touch last-col-touch">-</div>
+                    <div class="row_touch" data-key="1">1</div>
+                    <div class="row_touch" data-key="2">2</div>
+                    <div class="row_touch" data-key="3">3</div>
+                    <div class="row_touch last-col-touch" data-key="substract">-</div>
                 </div>
                 <div class="cal__touches_row last-row">
-                    <div class="row_touch">00</div>
-                    <div class="row_touch">0</div>
-                    <div class="row_touch">.</div>
-                    <div class="row_touch last-col-touch">=</div>
+                    <div class="row_touch" data-key="00">00</div>
+                    <div class="row_touch" data-key="0">0</div>
+                    <div class="row_touch" data-key=".">.</div>
+                    <div class="row_touch last-col-touch" data-key="operate">=</div>
                 </div>
             </div>
         </div>
@@ -53,6 +53,6 @@
             copyright © The odin project - by facinetm14
         </footer>
     </div>
-<script src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
 </body>
 </html>
