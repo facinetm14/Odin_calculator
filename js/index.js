@@ -50,7 +50,7 @@ const cleanScreen = () => {
 
 const validPosition = (text, key) => {
     if (!text.length) return false;
-    if (text[0] == '0') return false;
+    if (text == "0") return false;
     const secondPart = text.lastIndexOf(SPACE);
     if (secondPart != - 1 && text[secondPart + 1] && isZero(text[secondPart + 1])) {
         return false; 
@@ -61,13 +61,23 @@ const validPosition = (text, key) => {
 
 const updateOperation = (key, operation) => {
     let currentOperation = operation;
-    if (key == FLOAT_SEPARATOR && operation.indexOf(FLOAT_SEPARATOR) < 0) {
-        currentOperation += key;
+    if (calculation.result) {
+        cleanScreen();
+        currentOperation = "0";
+    }
+    const startNum2 = currentOperation.lastIndexOf(SPACE);
+    if (key == FLOAT_SEPARATOR) {
+        if (currentOperation.indexOf(FLOAT_SEPARATOR) < 0) currentOperation += key;
+        else if ( startNum2 > 0 && currentOperation.indexOf(FLOAT_SEPARATOR, startNum2)) {
+            currentOperation += key;
+        }
     }
     else if (isNonZeroDigit(key)) {
         const spaceIndex = currentOperation.lastIndexOf(SPACE);
         if (isZero(currentOperation)) currentOperation = key;
-        else if (isZero(currentOperation[spaceIndex + 1])) {
+        else if (spaceIndex > 0 &&
+            currentOperation.indexOf(FLOAT_SEPARATOR, spaceIndex) < 0 &&
+            isZero(currentOperation[spaceIndex + 1])) {
             currentOperation = currentOperation.substring(0, spaceIndex + 1) + key;
         }
         else currentOperation = currentOperation + key;
@@ -109,9 +119,11 @@ const updateScreenResult = (result) => {
 }
 
 const execCalculation = (currentOperation) => {
-    setSecondOperand(currentOperation);
-    calculation.result = operate(calculation.num1, calculation.num2, Calculator[calculation.operator]);
-    updateScreenResult(calculation.result);
+     if (calculation.operator) {
+         setSecondOperand(currentOperation);
+         calculation.result = operate(calculation.num1, calculation.num2, Calculator[calculation.operator]);
+         updateScreenResult(calculation.result);
+    }
 }
 
 function handleClick() {
