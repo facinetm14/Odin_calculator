@@ -7,6 +7,7 @@ import {
     OPERATORS,
     isEquality,
     SPACE,
+    FLOAT_SEPARATOR,
     operate,
     isCleaning,
 } from './calculator.js';
@@ -58,37 +59,72 @@ const validPosition = (text, key) => {
     return true;
 }
 
-function handleClick() {
-    animateTouch(this);
-
-    let currentOperation = screenOperation.textContent;
-    const key = this.dataset.key;
-    if (isCleaning(key)) return cleanScreen();
-    if (isNonZeroDigit(key)) {
+const updateOperation = (key, operation) => {
+    let currentOperation = operation;
+    if (key == FLOAT_SEPARATOR && operation.indexOf(FLOAT_SEPARATOR) < 0) {
+        currentOperation += key;
+    }
+    else if (isNonZeroDigit(key)) {
         const spaceIndex = currentOperation.lastIndexOf(SPACE);
-        if (isZero(currentOperation)) {
-            currentOperation = key;
-        }
+        if (isZero(currentOperation)) currentOperation = key;
         else if (isZero(currentOperation[spaceIndex + 1])) {
             currentOperation = currentOperation.substring(0, spaceIndex + 1) + key;
         }
         else currentOperation = currentOperation + key;
     }
     else if (isZero(key) && validPosition(currentOperation, key)) currentOperation += key;
-    else if (isOperator(key)) {
-        calculation.num1 = currentOperation;
-        if (!calculation.operator) {
-            currentOperation += ` ${OPERATORS[key]} `;
-            calculation.operator = key;
-        }
+    return currentOperation;
+}
+
+const setFirstOperand = (currentOperation) => {
+    if (!calculation.num1) calculation.num1 = currentOperation;
+}
+
+const updateOperator = (key, operation) => {
+    let currentOperation = operation;
+    if (!calculation.operator) {
+        calculation.operator = key;
+        currentOperation += SPACE + OPERATORS[key] + SPACE;
     }
-    else if (isEquality(key)) {
-        const start = currentOperation.lastIndexOf(SPACE);
-        calculation.num2 = currentOperation.substring(start + 1);
-        const result = operate(+calculation.num1, +calculation.num2, Calculator[calculation.operator]);
-        screenResult.textContent = `${result}`;
+    else if (calculation.result) {
+        const num1 = calculation.result;
+        cleanScreen();
+        calculation.num1 = num1;
+        calculation.operator = key;
+        currentOperation = num1 + SPACE + OPERATORS[key] + SPACE;
     }
-    updateScreenOperation(currentOperation);
+    else if (operation.lastIndexOf(SPACE) == operation.length - 1) {
+        currentOperation = currentOperation.replace(OPERATORS[calculation.operator], OPERATORS[key]);
+        calculation.operator = key;
+    }
+    return currentOperation;
+}
+const setSecondOperand = (currentOperation) => {
+    const start = currentOperation.lastIndexOf(SPACE);
+    calculation.num2 = currentOperation.substring(start + 1);
+}
+
+const updateScreenResult = (result) => {
+    screenResult.textContent = `${result}`;
+}
+
+const execCalculation = (currentOperation) => {
+    setSecondOperand(currentOperation);
+    calculation.result = operate(calculation.num1, calculation.num2, Calculator[calculation.operator]);
+    updateScreenResult(calculation.result);
+}
+
+function handleClick() {
+    animateTouch(this);
+    const currentOperation = screenOperation.textContent;
+    const key = this.dataset.key;
+    if (isCleaning(key)) return cleanScreen();
+    if (isOperator(key)) {
+        setFirstOperand(currentOperation);
+        updateScreenOperation(updateOperator(key, currentOperation));
+    }
+    else if (isEquality(key)) execCalculation(currentOperation);
+    else updateScreenOperation(updateOperation(key, currentOperation));
 }
 
 touches.forEach((touch) => {

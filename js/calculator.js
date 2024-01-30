@@ -5,11 +5,13 @@ const OPERATORS = {
     multiply: 'X',
     divide: '/',
     modulo: '%',
+    powX: '^',
 };
 
 const EQUALITY = "operate";
 const SPACE = ' ';
 const CLEAN = 'C';
+const FLOAT_SEPARATOR = '.';
 
 const add = (num1, num2) => {
     return num1 + num2;
@@ -33,7 +35,7 @@ const modulo = (num1, num2) => {
 
 const operate = (num1, num2, operation) => {
     try {
-        const result = operation(num1, num2);
+        const result = operation(+num1, +num2);
         return result;
     }
     catch (error) {
@@ -45,10 +47,13 @@ const isNonZeroDigit = (key) => {
     return nonZeroDigits.includes(key);
 }
 
+const powX = (base, exp) => {
+    return Math.pow(base, exp);   
+}
+
 const isZero = (key) => {
     return (key == "00" || key == "0");
 }
-
 const isOperator = (key) => {
     return OPERATORS.hasOwnProperty(key);
 }
@@ -67,6 +72,7 @@ const Calculator = {
     multiply: multiply,
     divide: divide,
     modulo: modulo,
+    powX: powX
 };
 
 export {
@@ -79,4 +85,5 @@ export {
     Calculator,
     OPERATORS,
     SPACE,
+    FLOAT_SEPARATOR
 };
