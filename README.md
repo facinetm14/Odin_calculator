@@ -2,6 +2,7 @@
 This project is from <a href="https://www.theodinproject.com/">TheOdinProject</a>.  It consists of build an simple calculator performing basic operators.
 
 ## Preview
+https://facinetm14.github.io/Odin_calculator/
 
 ## Technos
 <ul>
