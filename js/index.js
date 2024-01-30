@@ -13,6 +13,7 @@ import {
 } from './calculator.js';
 
 const TRANSITION_TIMES = 250;
+const MAX_COLUMN = 15;
 const calculation = {
     num1: "",
     num2: "",
@@ -61,6 +62,8 @@ const validPosition = (text, key) => {
 
 const updateOperation = (key, operation) => {
     let currentOperation = operation;
+    if (currentOperation.length == MAX_COLUMN - 4 && !calculation.operator) return currentOperation;
+    if (currentOperation.length >= MAX_COLUMN && calculation.operator) return currentOperation;
     if (calculation.result) {
         cleanScreen();
         currentOperation = "0";
@@ -90,22 +93,27 @@ const setFirstOperand = (currentOperation) => {
     if (!calculation.num1) calculation.num1 = currentOperation;
 }
 
+const startNewOperation = (key) => {
+    const num1 = calculation.result;
+    cleanScreen();
+    calculation.num1 = num1;
+    calculation.operator = key;
+    return num1 + SPACE + OPERATORS[key] + SPACE;
+}
 const updateOperator = (key, operation) => {
     let currentOperation = operation;
     if (!calculation.operator) {
         calculation.operator = key;
         currentOperation += SPACE + OPERATORS[key] + SPACE;
     }
-    else if (calculation.result) {
-        const num1 = calculation.result;
-        cleanScreen();
-        calculation.num1 = num1;
-        calculation.operator = key;
-        currentOperation = num1 + SPACE + OPERATORS[key] + SPACE;
-    }
+    else if (calculation.result) currentOperation = startNewOperation(key);
     else if (operation.lastIndexOf(SPACE) == operation.length - 1) {
         currentOperation = currentOperation.replace(OPERATORS[calculation.operator], OPERATORS[key]);
         calculation.operator = key;
+    }
+    else if (operation.lastIndexOf(SPACE) < operation.length - 1) {
+        execCalculation(operation);
+        currentOperation = startNewOperation(key);
     }
     return currentOperation;
 }
@@ -115,14 +123,17 @@ const setSecondOperand = (currentOperation) => {
 }
 
 const updateScreenResult = (result) => {
-    screenResult.textContent = `${result}`;
+     if (result.length > MAX_COLUMN) {
+        screenResult.textContent = result.substring(0, MAX_COLUMN);
+    }
+    else screenResult.textContent = result;
 }
 
 const execCalculation = (currentOperation) => {
      if (calculation.operator) {
          setSecondOperand(currentOperation);
          calculation.result = operate(calculation.num1, calculation.num2, Calculator[calculation.operator]);
-         updateScreenResult(calculation.result);
+         updateScreenResult(`${calculation.result}`);
     }
 }
 
